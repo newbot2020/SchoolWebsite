@@ -1,0 +1,6 @@
+ViewData["Studentsid"] = new SelectList(_context.Students.ToList(), "id", "Name");
+ViewData["Class"] = new SelectList(_context.Subjects.ToList(), "id", "Class");
+
+
+<select class="form-control" asp-for="Studentsid" asp-items="ViewBag.Studentsid">
+</select>

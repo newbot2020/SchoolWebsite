@@ -1,0 +1,197 @@
+﻿@model schoolwebsite.Models.Students
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .login-container {
+        margin-top: 5%;
+        margin-bottom: 5%;
+    }
+
+    .login-form-2 {
+        padding: 5%;
+        background: #f5775b;
+        box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+    }
+
+        .login-form-2 h3 {
+            text-align: center;
+            color: #fff;
+        }
+
+    .login-container form {
+        padding: 10%;
+    }
+
+    .btnSubmit {
+        width: 50%;
+        border-radius: 1rem;
+        padding: 1.5%;
+        border: none;
+        cursor: pointer;
+    }
+
+
+
+    .login-form-2 .ForgetPwd {
+        color: #fff;
+        font-weight: 600;
+        text-decoration: none;
+    }
+</style>
+<h1>Create</h1>
+
+<h4>Students</h4>
+<hr />
+<div class="col-md-5 login-form-2" id="part-2" style=" margin-left: 30%;">
+    <h3 style="margin-bottom:20px;">Students Registration Form</h3>
+    <form asp-action="Create" id="form1">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+
+            <input asp-for="Name" class="form-control" placeholder="Name" value=""  />
+            <span asp-validation-for="Name" class="text-danger font-weight-bolder"></span>
+            <span class="text-danger font-weight-bolder" id="servermessage"></span>
+            
+
+
+        </div>
+        <div class="form-group">
+
+            <select asp-for="classinfo" id="classes" class="form-control" value="">
+                <option value="" selected disabled>Class</option>
+                <option value="1">Class-1</option>
+                <option value="2">Class-2</option>
+                <option value="3">Class-3</option>
+                <option value="4">Class-4</option>
+                <option value="5">Class-5</option>
+                <option value="6">Class-6</option>
+                <option value="7">Class-7</option>
+                <option value="8">Class-8</option>
+                <option value="9">Class-9</option>
+                <option value="10">Class-10</option>
+
+            </select>
+            <span asp-validation-for="classinfo" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+
+            <input asp-for="roll" class="form-control" placeholder="Roll" value="" />
+            <span asp-validation-for="roll" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <!--<input asp-for="section" class="form-control" placeholder="Section" value="" />  -->
+
+            <select asp-for="section" id="cars" class="form-control" value="">
+                <option value="" selected disabled>Section</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+            </select>
+            <span asp-validation-for="section" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+
+            <input asp-for="address" class="form-control" placeholder="Address" value="" />
+            <span asp-validation-for="address" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+
+            <input asp-for="parentscontact" class="form-control" id="contacts" placeholder="Contact Number" value="" />
+            <span asp-validation-for="parentscontact" class="text-danger"></span>
+            <p id="message2"></p>
+        </div>
+
+
+        <div class="form-group">
+
+            <input asp-for="username" class="form-control" placeholder="User Name" id="name" value="" />
+            <span asp-validation-for="username" class="text-danger"></span>
+            <p id="message"></p>
+        </div>
+
+        <div class="form-group">
+            <input asp-for="password" class="form-control" placeholder="Your Password *" id="pass" value="" />
+            <span asp-validation-for="password" class="text-danger"></span>
+        </div>
+        <div class="form-group" style="margin-top:30px;">
+            <input type="submit" class="btn btn-secondary btn-block" id="submit" value="Register" />
+        </div>
+
+    </form>
+</div>
+
+<div>
+    <a class="btn btn-info" asp-action="Index">Back to List</a>
+</div>
+
+
+@section Scripts{
+
+    <script>
+    $(document).ready(function () {
+        $('#name').keydown(function () {
+            $('#message').html("Checking....");
+            $('#message').css("color", "blue");
+        });
+
+        $('#pass').hover(function () {
+           
+            $.post("@Url.Action("Namecheck","Students")",
+            {
+                userdata: $("#name").val()
+            },
+            function (data) {
+                if (data == 0) {
+                    $('#message').html("Available ");
+                    $('#message').css("color", "green");
+                    $("#submit").attr("disabled", false);
+
+                }
+                else {
+                    $('#message').html("Not Available ");
+                    $('#message').css("color", "red");
+                    $("#submit").attr("disabled", true);
+                }
+            });
+
+        });
+        $('#contacts').keydown(function () {
+            $('#message2').html("Checking....");
+            $('#message2').css("color", "blue");
+
+            var contactstring = $("#contacts").val();
+
+            function isNumber(str) {
+                if (typeof str != "string") return false // we only process strings!
+                // could also coerce to string: str = ""+str
+                return !isNaN(str) && !isNaN(parseFloat(str))
+            }
+            var contact = isNumber(contactstring);
+
+            console.log(contact);
+            if (contact ) {
+
+                $('#message2').html("Okay!");
+                $('#message2').css("color", "green");
+
+            }
+           else {
+
+                
+                $('#message2').html("Number is not correct");
+                $('#message2').css("color", "red");
+                $("#submit").attr("disabled", true);
+            }
+            
+        });
+
+
+    });
+    </script>
+
+}
+
