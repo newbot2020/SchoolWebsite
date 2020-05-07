@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using schoolwebsite.Data;
 using schoolwebsite.Models;
+using SQLitePCL;
 
 namespace schoolwebsite.Controllers
 {
@@ -155,6 +156,13 @@ namespace schoolwebsite.Controllers
             return Json(result);
         }
 
+        public IActionResult Datainfo (int userdata)
+        {
+            //string ID = userdata.ToString();
+            var result = _context.Subjects.Where(m => m.id == userdata).ToList();
+            return Json(result);
+        }
+            
         private bool ResultsExists(int id)
         {
             return _context.Results.Any(e => e.id == id);
