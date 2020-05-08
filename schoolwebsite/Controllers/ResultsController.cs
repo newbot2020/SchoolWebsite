@@ -48,7 +48,7 @@ namespace schoolwebsite.Controllers
         public IActionResult Create()
         {
             ViewData["Studentsid"] = new SelectList(_context.Students.ToList(), "id", "Name");
-            ViewData["Class"] = new SelectList(_context.Subjects.ToList(), "id", "Class");
+            ViewData["Subjectsid"] = new SelectList(_context.Subjects.ToList(), "id", "Class");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace schoolwebsite.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,Studentsid,Class,Result1,Result2,Result3,Result4,Result5,Result6,Result7,Result8,Result9,Result10,Result11,Result12")] Results results)
+        public async Task<IActionResult> Create([Bind("id,Studentsid,Subjectsid,Result1,Result2,Result3,Result4,Result5,Result6,Result7,Result8,Result9,Result10,Result11,Result12")] Results results)
         {
             if (ModelState.IsValid)
             {

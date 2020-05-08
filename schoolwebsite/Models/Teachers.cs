@@ -23,7 +23,7 @@ namespace schoolwebsite.Models
         [Required(ErrorMessage = "Please give your email address")]
         public string Email { get; set; }
         [Required(ErrorMessage = "Please give your Contact Number")]
-        public long ContactNum { get; set; }
+        public string ContactNum { get; set; }
         [Required(ErrorMessage = "Please give your Address")]
         public string Address { get; set; }
         [Required(ErrorMessage = "Please give a username for your account")]

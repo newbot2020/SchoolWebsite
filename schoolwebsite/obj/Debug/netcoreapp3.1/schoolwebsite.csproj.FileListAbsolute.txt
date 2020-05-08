@@ -461,3 +461,4 @@ C:\Users\User\Documents\projects\SchoolWebsite\schoolwebsite\schoolwebsite\obj\D
 C:\Users\User\Documents\projects\SchoolWebsite\schoolwebsite\schoolwebsite\obj\Debug\netcoreapp3.1\Razor\Views\Results\Details.cshtml.g.cs
 C:\Users\User\Documents\projects\SchoolWebsite\schoolwebsite\schoolwebsite\obj\Debug\netcoreapp3.1\Razor\Views\Results\Edit.cshtml.g.cs
 C:\Users\User\Documents\projects\SchoolWebsite\schoolwebsite\schoolwebsite\obj\Debug\netcoreapp3.1\Razor\Views\Results\Index.cshtml.g.cs
+C:\Users\User\Documents\projects\SchoolWebsite\schoolwebsite\schoolwebsite\obj\Debug\netcoreapp3.1\Razor\Views\Studentdetails\Index.cshtml.g.cs

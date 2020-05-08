@@ -9,6 +9,7 @@
 <hr />
 
 <style>
+
     .login-container {
         margin-top: 5%;
         margin-bottom: 5%;
@@ -37,7 +38,7 @@
         cursor: pointer;
     }
 
-    
+
 
     .login-form-2 .ForgetPwd {
         color: #fff;
@@ -62,8 +63,9 @@
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <input asp-for="ContactNum" class="form-control" placeholder="Contact Number" value="" />
+            <input asp-for="ContactNum" class="form-control" placeholder="Contact Number" value="" id="contacts"/>
             <span asp-validation-for="ContactNum" class="text-danger"></span>
+            <p id="message2"></p>
         </div>
         <div class="form-group">
             <input asp-for="Address" class="form-control" placeholder="Address" value="" />
@@ -71,8 +73,9 @@
         </div>
 
         <div class="form-group">
-            <input asp-for="Username" class="form-control" placeholder="User Name" value="" />
+            <input asp-for="Username" class="form-control" placeholder="User Name" value="" id="name" />
             <span asp-validation-for="Username" class="text-danger"></span>
+            <p id="message"></p>
         </div>
 
         <div class="form-group">
@@ -80,7 +83,7 @@
             <span asp-validation-for="password" class="text-danger"></span>
         </div>
         <div class="form-group" style="margin-top:30px;">
-            <input type="submit" class="btn btn-secondary btn-block" value="Register" />
+            <input type="submit" class="btn btn-secondary btn-block" value="Register" id="submit"/>
         </div>
 
     </form>
@@ -91,6 +94,79 @@
     <a class="btn btn-info" asp-action="Index">Back to List</a>
 </div>
 
+
+
+
+    
+
+
+
+
 @section Scripts {
+
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#name').keydown(function () {
+            $('#message').html("Checking....");
+            $('#message').css("color", "blue");
+        });
+
+        $('#name').focusout(function () {
+
+            $.post("@Url.Action("Namecheck","Teachers")",
+            {
+                userdata: $("#name").val()
+            },
+            function (data) {
+                if (data == 0) {
+                    $('#message').html("Available ");
+                    $('#message').css("color", "green");
+                    $("#submit").attr("disabled", false);
+
+                }
+                else {
+                    $('#message').html("Not Available ");
+                    $('#message').css("color", "red");
+                    $("#submit").attr("disabled", true);
+                }
+            });
+
+        });
+        $('#contacts').keydown(function () {
+            $('#message2').html("Checking....");
+            $('#message2').css("color", "blue");
+
+            var contactstring = $("#contacts").val();
+
+            function isNumber(str) {
+                if (typeof str != "string") return false // we only process strings!
+                // could also coerce to string: str = ""+str
+                return !isNaN(str) && !isNaN(parseFloat(str))
+            }
+            var contact = isNumber(contactstring);
+
+            console.log(contact);
+            if (contact ) {
+
+                $('#message2').html("Okay!");
+                $('#message2').css("color", "green");
+
+            }
+           else {
+
+
+                $('#message2').html("Number is not correct");
+                $('#message2').css("color", "red");
+                $("#submit").attr("disabled", true);
+            }
+
+        });
+
+
+    });
+    </script>
+
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -226,9 +226,6 @@ namespace schoolwebsite.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Class")
-                        .HasColumnType("int");
-
                     b.Property<string>("Result1")
                         .HasColumnType("nvarchar(max)");
 
@@ -268,8 +265,11 @@ namespace schoolwebsite.Migrations
                     b.Property<int>("Studentsid")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Subjectsid")
+                    b.Property<int>("Subjectsid")
                         .HasColumnType("int");
+
+                    b.Property<long>("year")
+                        .HasColumnType("bigint");
 
                     b.HasKey("id");
 
@@ -278,6 +278,33 @@ namespace schoolwebsite.Migrations
                     b.HasIndex("Subjectsid");
 
                     b.ToTable("Results");
+                });
+
+            modelBuilder.Entity("schoolwebsite.Models.Studentdetails", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("Resultsid")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Studentsid")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Subjectsid")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("Resultsid");
+
+                    b.HasIndex("Studentsid");
+
+                    b.HasIndex("Subjectsid");
+
+                    b.ToTable("Studentdetails");
                 });
 
             modelBuilder.Entity("schoolwebsite.Models.Students", b =>
@@ -397,8 +424,9 @@ namespace schoolwebsite.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("ContactNum")
-                        .HasColumnType("bigint");
+                    b.Property<string>("ContactNum")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DateCreated")
                         .HasColumnType("datetime2");
@@ -482,6 +510,23 @@ namespace schoolwebsite.Migrations
                         .HasForeignKey("Studentsid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("schoolwebsite.Models.Subjects", "Subjects")
+                        .WithMany()
+                        .HasForeignKey("Subjectsid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("schoolwebsite.Models.Studentdetails", b =>
+                {
+                    b.HasOne("schoolwebsite.Models.Results", "Results")
+                        .WithMany()
+                        .HasForeignKey("Resultsid");
+
+                    b.HasOne("schoolwebsite.Models.Students", "Students")
+                        .WithMany()
+                        .HasForeignKey("Studentsid");
 
                     b.HasOne("schoolwebsite.Models.Subjects", "Subjects")
                         .WithMany()

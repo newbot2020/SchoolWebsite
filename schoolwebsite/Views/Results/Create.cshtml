@@ -20,14 +20,19 @@
                 <span asp-validation-for="Studentsid" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Class" class="control-label"></label>
-                <select class="form-control" asp-for="Class" asp-items="ViewBag.Class" id="class1">
+                <label asp-for="Subjectsid" class="control-label"></label>
+                <select class="form-control" asp-for="Subjectsid" asp-items="ViewBag.Subjectsid" id="class1">
                 </select>
-                <span asp-validation-for="Class" class="text-danger"></span>
+                <span asp-validation-for="Subjectsid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="year" class="control-label" ></label>
+                <input asp-for="year" class="form-control " />
+                <span asp-validation-for="year" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Result1" class="control-label" id="lresult1"></label>
-                <input asp-for="Result1" class="form-control " id="result1"/>
+                <input asp-for="Result1" class="form-control " id="result1" />
                 <span asp-validation-for="Result1" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -22,6 +22,7 @@ namespace schoolwebsite.Controllers
         // GET: Teachers
         public async Task<IActionResult> Index()
         {
+            
             return View(await _context.Teachers.ToListAsync());
         }
 
@@ -60,7 +61,7 @@ namespace schoolwebsite.Controllers
             {
                 _context.Add(teachers);
                 await _context.SaveChangesAsync();
-                TempData["save"] = "Submitted Successfully";
+                TempData["save"] = "Data saved Successfully";
                 return RedirectToAction(nameof(Index));
             }
             return View(teachers);
@@ -144,6 +145,16 @@ namespace schoolwebsite.Controllers
             _context.Teachers.Remove(teachers);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public JsonResult Namecheck(string userdata)
+        {
+            var search = _context.Teachers.Any(e => e.Username == userdata);
+            if (search)
+            {
+                return Json(1);
+            }
+            else { return Json(0); }
         }
 
         private bool TeachersExists(int id)

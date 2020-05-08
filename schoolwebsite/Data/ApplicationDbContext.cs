@@ -17,5 +17,7 @@ namespace schoolwebsite.Data
         public DbSet<schoolwebsite.Models.Teachers> Teachers { get; set; }
         public DbSet<schoolwebsite.Models.Results> Results { get; set; }
         public DbSet<schoolwebsite.Models.Subjects> Subjects { get; set; }
+
+        public DbSet<schoolwebsite.Models.Studentdetails> Studentdetails { get; set; }
     }
 }

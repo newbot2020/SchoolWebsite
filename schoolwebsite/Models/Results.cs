@@ -13,9 +13,12 @@ namespace schoolwebsite.Models
         [Required]
         public int Studentsid { get; set; }
         
+        public long year { get; set; }
         public Students Students { get; set; }
-
-        public int Class { get; set; }
+        [Display(Name ="Class")]
+        public int Subjectsid { get; set; }
+        [ForeignKey("Subjectsid")]
+        public Subjects Subjects { get; set; }
         public String Result1 { get; set; }
         public String Result2 { get; set; }
         public String Result3 { get; set; }
@@ -31,7 +34,7 @@ namespace schoolwebsite.Models
         public String Result11 { get; set; }
         public String Result12 { get; set; }
         
-        public Subjects Subjects { get; set; }
+        
 
 
     }

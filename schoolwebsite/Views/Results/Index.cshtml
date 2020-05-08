@@ -17,7 +17,10 @@
                 @Html.DisplayNameFor(model => model.Studentsid)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Class)
+                @Html.DisplayNameFor(model => model.Subjectsid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.year)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Result1)
@@ -65,7 +68,10 @@
                 @Html.DisplayFor(modelItem => item.Students.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Class)
+                @Html.DisplayFor(modelItem => item.Subjectsid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.year)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Result1)
@@ -105,7 +111,7 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+                
                 <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
             </td>
         </tr>
