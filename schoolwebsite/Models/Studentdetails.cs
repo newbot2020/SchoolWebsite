@@ -16,5 +16,7 @@ namespace schoolwebsite.Models
         public Results Results { get; set; }
 
         public Subjects Subjects { get; set; }
+
+        
     }
 }

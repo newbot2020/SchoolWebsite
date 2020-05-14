@@ -33,8 +33,9 @@ namespace schoolwebsite.Models
 
         public String Result11 { get; set; }
         public String Result12 { get; set; }
-        
-        
+        public Attendance Attendances { get; set; }
+
+
 
 
     }

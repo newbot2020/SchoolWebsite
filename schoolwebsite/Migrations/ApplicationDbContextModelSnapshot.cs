@@ -219,12 +219,35 @@ namespace schoolwebsite.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("schoolwebsite.Models.Attendance", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Absent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Studentsid")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("Studentsid");
+
+                    b.ToTable("Attendances");
+                });
+
             modelBuilder.Entity("schoolwebsite.Models.Results", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("Attendancesid")
+                        .HasColumnType("int");
 
                     b.Property<string>("Result1")
                         .HasColumnType("nvarchar(max)");
@@ -272,6 +295,8 @@ namespace schoolwebsite.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("id");
+
+                    b.HasIndex("Attendancesid");
 
                     b.HasIndex("Studentsid");
 
@@ -503,8 +528,21 @@ namespace schoolwebsite.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("schoolwebsite.Models.Attendance", b =>
+                {
+                    b.HasOne("schoolwebsite.Models.Students", "Students")
+                        .WithMany()
+                        .HasForeignKey("Studentsid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("schoolwebsite.Models.Results", b =>
                 {
+                    b.HasOne("schoolwebsite.Models.Attendance", "Attendances")
+                        .WithMany()
+                        .HasForeignKey("Attendancesid");
+
                     b.HasOne("schoolwebsite.Models.Students", "Students")
                         .WithMany()
                         .HasForeignKey("Studentsid")

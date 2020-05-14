@@ -1,0 +1,131 @@
+﻿@model IEnumerable<schoolwebsite.Models.Attendance>
+
+@{
+
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+{
+<style>
+    
+    .tableformat{
+        margin-left:25%;
+        padding-left:50px;
+        padding-right:50px;
+    }
+    
+</style>
+}
+<div class="jumbotron">
+    <div class="row">
+        <label class="form-group col-2">Class:</label>
+        <input class="form-group col-2" type="search" name="" value="" id="classinfo" />
+    </div>
+    <div class="row">
+        <label class="form-group col-2 ">Roll:</label>
+        <input class="form-group col-2" type="search" name="" value="" id="roll" />
+    </div>
+    <input class="btn btn-info" type="button" name="" value="Submit" id="button" />
+</div>
+<h6 style="margin-left:30%;color:darkblue;color:darkcyan;" id="message"></h6>
+<div id="main" style="display:none;">
+    <div id="tablein" class="tableformat">
+        <h2>Student's Information</h2>
+
+    </div>
+    
+    </div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#button").click(function () {
+                $("#message").text("Loading Table Please Wait...");
+                var classinfo = parseInt($("#classinfo").val());
+                var roll = parseInt($("#roll").val());
+                console.log(classinfo);
+                console.log(typeof (classinfo));
+                console.log(roll);
+                console.log(typeof (roll));
+                var data = {
+                    classinfo: classinfo,
+                    roll: roll
+                };
+                console.log(data);
+                $.post("/Attendances/Searchbox",
+                    {
+                        classinfo: classinfo,
+                        roll: roll
+                    },
+                    function (data, status) {
+                        console.log("Data: " + data + "\nStatus: " + status);
+                        
+                        var htmlcontent = '';
+                        var tablecontent = `<table class="table table-striped col-8">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td class="col-2">Name</td>
+                            <td id="name" class="col-4 text-center"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-2">Class</td>
+                            <td id="class" class="col-4 text-center"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-2">Section</td>
+                            <td id="section" class="col-4 text-center" ></td>
+                        </tr>
+                        <tr>
+                            <td class="col-2">Roll</td>
+                            <td id="rollnum" class="col-4 text-center"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-2">Parents Contact</td>
+                            <td id="parentscontact" class="col-4 text-center"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-2">Address</td>
+                            <td id="address" class="col-4 text-center"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-2">Dates of Absents </td><td class="col-4 text-center"></td>
+
+                        </tr>`;
+                for (var i = 0; i < data.length; i++) {
+                                    var content = '<tr><td class="col-2"></td><td class="col-4 text-center">'+" " + data[i].absent +" "+ '</td></tr>';
+                                    htmlcontent += content;
+                                    //$("#absent").innerhtml(content);
+                        }
+
+                        var htmltable = tablecontent + htmlcontent + '</table>';
+
+    
+
+
+
+
+
+                        
+                        //console.log(htmlcontent);
+                        $("#tablein").append(htmltable);
+                        $("#main").css("display", "block");
+                        $("#name").text(data[0].students.name);
+                        $("#class").text(data[0].students.classinfo);
+                        $("#section").text(data[0].students.section);
+                        $("#rollnum").text(data[0].students.roll);
+                        $("#parentscontact").text(data[0].students.parentscontact);
+                        $("#address").text(data[0].students.address);
+                        $("#message").css("display", "none");
+
+
+                        
+                    });
+            });
+        });
+    </script>
+}

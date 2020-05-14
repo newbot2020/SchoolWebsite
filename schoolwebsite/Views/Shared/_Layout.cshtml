@@ -20,9 +20,9 @@
 <body>
     <header>
         <nav class="navbar navbar-fixed navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">
-                <div class="d-inline-flex">
-                    <img src="~/img/logo.png" asp-append-version="true" width="40" height="40" class="d-inline-block align-top" alt=""><h2>Albert International School</h2>
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                <div class="d-inline-flex">                    
+                    <img src="~/img/logo.png" asp-append-version="true" width="40" height="40" class="d-inline-block align-top" alt="" ><h2>Albert International School</h2>
                 </div>
             </a>
             
@@ -33,15 +33,19 @@
                 <div class="navbar-nav ml-auto">
 
                    
-                    <div class="dropdown show">
+                    <div class="dropdown show mr-lg-2" style="margin-right:3%;">
                         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Dropdown link
                         </a>
 
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" asp-action="Create"asp-controller="Results" >Results</a>
-                            <a class="dropdown-item" asp-action="Create" asp-controller="Subjects" >Subjects</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" asp-action="Create" asp-controller="Results">Results</a>
+                            <a class="dropdown-item" asp-action="Create" asp-controller="Subjects">Subjects & Classinfo</a>
                             <a class="dropdown-item" asp-action="Index" asp-controller="Studentdetails">Students Details</a>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="Attendances">Monthly Attendance Input</a>
+                            <a class="dropdown-item" asp-action="Datashow" asp-controller="Attendances">Attendance list</a>
+                            
+                            <a class="dropdown-item" asp-action="Index3" asp-controller="Attendances">Short information</a>
                         </div>
                     </div>
 
