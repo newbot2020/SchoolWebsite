@@ -21,7 +21,7 @@ namespace schoolwebsite.Controllers
         public IActionResult Index()
         {
             var result = _context.Results.Include(m => m.Subjects).Include(m => m.Students).Include(m => m.Attendances).ToList();
-            return Json(result);
+            return View(result);
         }
         public IActionResult Createid(int id)
         {

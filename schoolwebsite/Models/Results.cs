@@ -12,8 +12,8 @@ namespace schoolwebsite.Models
         public int id { get; set; }
         [Required]
         public int Studentsid { get; set; }
-        
-        public long year { get; set; }
+        [Required]
+        public int year { get; set; }
         public Students Students { get; set; }
         [Display(Name ="Class")]
         public int Subjectsid { get; set; }
