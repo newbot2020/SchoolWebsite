@@ -929,3 +929,12 @@ C:\Users\USER\Desktop\Projects\SchoolWebsite-master\SchoolWebsite\schoolwebsite\
 C:\Users\USER\Desktop\Projects\SchoolWebsite-master\SchoolWebsite\schoolwebsite\obj\Debug\netcoreapp3.1\Razor\Views\Attendances\Index2.cshtml.g.cs
 C:\Users\USER\Desktop\Projects\SchoolWebsite-master\SchoolWebsite\schoolwebsite\obj\Debug\netcoreapp3.1\Razor\Views\Attendances\Index3.cshtml.g.cs
 C:\Users\USER\Desktop\Projects\SchoolWebsite-master\SchoolWebsite\schoolwebsite\obj\Debug\netcoreapp3.1\Razor\Views\Attendances\Individualjquery.cshtml.g.cs
+C:\Users\USER\Desktop\Projects\SchoolWebsite-master\SchoolWebsite\schoolwebsite\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\ConfirmEmail.cshtml.g.cs
+C:\Users\USER\Desktop\Projects\SchoolWebsite-master\SchoolWebsite\schoolwebsite\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\ForgotPassword.cshtml.g.cs
+C:\Users\USER\Desktop\Projects\SchoolWebsite-master\SchoolWebsite\schoolwebsite\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Login.cshtml.g.cs
+C:\Users\USER\Desktop\Projects\SchoolWebsite-master\SchoolWebsite\schoolwebsite\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Logout.cshtml.g.cs
+C:\Users\USER\Desktop\Projects\SchoolWebsite-master\SchoolWebsite\schoolwebsite\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Register.cshtml.g.cs
+C:\Users\USER\Desktop\Projects\SchoolWebsite-master\SchoolWebsite\schoolwebsite\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\ResetPassword.cshtml.g.cs
+C:\Users\USER\Desktop\Projects\SchoolWebsite-master\SchoolWebsite\schoolwebsite\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\_ViewImports.cshtml.g.cs
+C:\Users\USER\Desktop\Projects\SchoolWebsite-master\SchoolWebsite\schoolwebsite\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\_ValidationScriptsPartial.cshtml.g.cs
+C:\Users\USER\Desktop\Projects\SchoolWebsite-master\SchoolWebsite\schoolwebsite\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\_ViewImports.cshtml.g.cs

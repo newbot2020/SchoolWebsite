@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using schoolwebsite.Data;
@@ -9,6 +10,7 @@ using schoolwebsite.Models;
 
 namespace schoolwebsite.Controllers
 {
+    [Authorize]
     public class StudentdetailsController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -10,8 +10,12 @@ namespace schoolwebsite.Models
     public class Attendance
     {
         public int id { get; set; }
+
+        public string Day { get; set; }
         
-        public string Absent { get; set; }
+        public string Month { get; set; }
+
+        public string Year { get; set; }
 
         public int Studentsid { get; set; }
         //[ForeignKey("Studentsid")]

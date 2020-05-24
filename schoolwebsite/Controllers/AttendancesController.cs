@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using schoolwebsite.Models;
 
 namespace schoolwebsite.Controllers
 {
+    [Authorize]
     public class AttendancesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -46,6 +48,12 @@ namespace schoolwebsite.Controllers
         {
             var result = _context.Attendances.Include(m=>m.Students).OrderBy(n=>n.Students.Name).ToList();
             return View (result);
+        }
+
+        public IActionResult Jsonshow()
+        {
+            var result = _context.Attendances.Include(m => m.Students).OrderBy(n => n.Students.Name).ToList();
+            return Json(result);
         }
         public IActionResult Index4()
         {
@@ -97,16 +105,22 @@ namespace schoolwebsite.Controllers
         }
         public IActionResult Index3()
         {
-
+            ViewData["nameofstudents"] = new SelectList(_context.Students.ToList(), "id", "Name");
             return View();
         }
-        
+        public IActionResult Datainfo(int userdata)
+        {
+            //string ID = userdata.ToString();
+            var result = _context.Attendances.Include(m=>m.Students).Where(m => m.Students.id == userdata).ToList();
+            return Json(result);
+        }
 
-        public IActionResult Searchbox(int classinfo, int roll)
+        public IActionResult Searchbox(int classinfo, int roll, string section )
         {   
             
             var result101 = _context.Attendances.Include(m => m.Students).Where(m => m.Students.classinfo == classinfo);
-            var result = result101.Where(m => m.Students.roll == roll).ToList();
+            var result102 = result101.Where(m => m.Students.roll == roll);
+            var result = result102.Where(m => m.Students.section == section).ToList();
             return Json (result);
         }
 

@@ -5,7 +5,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-{
+
 <style>
     
     .tableformat{
@@ -15,16 +15,28 @@
     }
     
 </style>
-}
+
 <div class="jumbotron">
     <div class="row">
         <label class="form-group col-2">Class:</label>
         <input class="form-group col-2" type="search" name="" value="" id="classinfo" />
     </div>
     <div class="row">
+        <label class="form-group col-2 ">Section:</label>
+        <input class="form-group col-2" type="search" name="" value="" id="sections" />
+    </div>
+    <div class="row">
         <label class="form-group col-2 ">Roll:</label>
         <input class="form-group col-2" type="search" name="" value="" id="roll" />
     </div>
+    <br /><br />
+    <h6 style="text-align:center;padding-top:5%;border-top:2px solid blue;">Or</h6>
+    <div class="row">
+        <label class="from-group col-4">Students Name</label>
+        <select class="from-group col-4" asp-items="ViewBag.nameofstudents" id="nameinfo">
+        </select>
+    </div>
+    <br /><br />
     <input class="btn btn-info" type="button" name="" value="Submit" id="button" />
 </div>
 <h6 style="margin-left:30%;color:darkblue;color:darkcyan;" id="message"></h6>
@@ -38,22 +50,49 @@
 @section Scripts{
     <script>
         $(document).ready(function () {
+            $("#classinfo").keydown(function () {
+
+                $('#nameinfo').prop('disabled', 'disabled');
+                    
+                
+            });
+
+        
+
+            
+                console.log("Multipurpose jquery");
+                //$('#nameinfo').prop('disabled', 'disabled');
+            
             $("#button").click(function () {
                 $("#message").text("Loading Table Please Wait...");
-                var classinfo = parseInt($("#classinfo").val());
-                var roll = parseInt($("#roll").val());
+                let classinfo = parseInt($("#classinfo").val());
+                let roll = parseInt($("#roll").val());
+                let section = ($("#sections").val());
+                let studentname = parseInt($("#nameinfo").val());
                 console.log(classinfo);
                 console.log(typeof (classinfo));
                 console.log(roll);
                 console.log(typeof (roll));
-                var data = {
-                    classinfo: classinfo,
-                    roll: roll
+
+
+                //firstloop of getting student details with classinfo roll and section
+
+                if (!Number.isNaN(classinfo) && !Number.isNaN(roll)) {
+                    console.log("Class info & roll loop");
+                    console.log(classinfo, roll);
+
+
+                    var data = {
+                        classinfo: classinfo,
+                        roll: roll,
+                        section:section 
+
                 };
                 console.log(data);
                 $.post("/Attendances/Searchbox",
                     {
                         classinfo: classinfo,
+                        section:section,
                         roll: roll
                     },
                     function (data, status) {
@@ -71,33 +110,39 @@
                         <tr>
                             <td class="col-2">Name</td>
                             <td id="name" class="col-4 text-center"></td>
+                            <td class="col-2"></td>
                         </tr>
                         <tr>
                             <td class="col-2">Class</td>
                             <td id="class" class="col-4 text-center"></td>
+                            <td class="col-2"></td>
                         </tr>
                         <tr>
                             <td class="col-2">Section</td>
                             <td id="section" class="col-4 text-center" ></td>
+                            <td class="col-2"></td>
                         </tr>
                         <tr>
                             <td class="col-2">Roll</td>
                             <td id="rollnum" class="col-4 text-center"></td>
+                            <td class="col-2"></td>
                         </tr>
                         <tr>
                             <td class="col-2">Parents Contact</td>
                             <td id="parentscontact" class="col-4 text-center"></td>
+                            <td class="col-2"></td>
                         </tr>
                         <tr>
                             <td class="col-2">Address</td>
                             <td id="address" class="col-4 text-center"></td>
+                            <td class="col-2"></td>
                         </tr>
                         <tr>
-                            <td class="col-2">Dates of Absents </td><td class="col-4 text-center"></td>
+                            <td class="col-2">Date of Absents </td><td class="col-4 text-center"></td><td class="col-2"></td>
 
                         </tr>`;
-                for (var i = 0; i < data.length; i++) {
-                                    var content = '<tr><td class="col-2"></td><td class="col-4 text-center">'+" " + data[i].absent +" "+ '</td></tr>';
+                        for (var i = 0; i < data.length; i++) {
+                                    var content = '<tr><td class="col-2">'+data[i].year +'</td><td class="col-2 text-center">'+ data[i].month +" "+ '</td><td class="col-2 text-center">'+ data[i].day +" "+ '</td></tr>';
                                     htmlcontent += content;
                                     //$("#absent").innerhtml(content);
                         }
@@ -125,6 +170,104 @@
 
                         
                     });
+                }
+
+
+                //second loop for finding details for 
+                if (Number.isNaN(classinfo) && Number.isNaN(roll)) {
+                    console.log("null operation $$$$$$$$$$$$$$$$$$");
+                    console.log(studentname);
+
+                    //post request
+                    var data = {
+                    classinfo: classinfo,
+                    roll: roll
+                };
+                console.log(data);
+                $.post("/Attendances/Datainfo",
+                    {
+                        userdata:studentname
+                    },
+                    function (data, status) {
+                        console.log("Data: " + data + "\nStatus: " + status);
+                        
+                        var htmlcontent = '';
+                        var tablecontent = `<table class="table table-striped col-8">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td class="col-2">Name</td>
+                            <td id="name" class="col-4 text-center"></td>
+                            <td class="col-2"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-2">Class</td>
+                            <td id="class" class="col-4 text-center"></td>
+                            <td class="col-2"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-2">Section</td>
+                            <td id="section" class="col-4 text-center" ></td>
+                            <td class="col-2"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-2">Roll</td>
+                            <td id="rollnum" class="col-4 text-center"></td>
+                            <td class="col-2"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-2">Parents Contact</td>
+                            <td id="parentscontact" class="col-4 text-center"></td>
+                            <td class="col-2"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-2">Address</td>
+                            <td id="address" class="col-4 text-center"></td>
+                            <td class="col-2"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-2">Date of Absents </td><td class="col-4 text-center"></td><td class="col-2"></td>
+
+                        </tr>`;
+                        for (var i = 0; i < data.length; i++) {
+                                    var content = '<tr><td class="col-2">'+data[i].year +'</td><td class="col-2 text-center">'+ data[i].month +" "+ '</td><td class="col-2 text-center">'+ data[i].day +" "+ '</td></tr>';
+                                    htmlcontent += content;
+                                    //$("#absent").innerhtml(content);
+                        }
+
+                        var htmltable = tablecontent + htmlcontent + '</table>';
+
+    
+
+
+
+
+
+                        
+                        //console.log(htmlcontent);
+                        $("#tablein").append(htmltable);
+                        $("#main").css("display", "block");
+                        $("#name").text(data[0].students.name);
+                        $("#class").text(data[0].students.classinfo);
+                        $("#section").text(data[0].students.section);
+                        $("#rollnum").text(data[0].students.roll);
+                        $("#parentscontact").text(data[0].students.parentscontact);
+                        $("#address").text(data[0].students.address);
+                        $("#message").css("display", "none");
+
+
+                        
+                    });
+                }
+
+
+
+                
             });
         });
     </script>
