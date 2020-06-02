@@ -124,5 +124,18 @@ namespace schoolwebsite.Controllers
             return Json (result);
         }
 
+        public IActionResult Deleteall()
+        {
+            var result = _context.Attendances.ToList();
+
+
+            
+            foreach (var res in result)
+                _context.Attendances.Remove(res);
+            _context.SaveChanges();
+           
+            return Json(1);
+        }
+
     }
 }

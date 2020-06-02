@@ -33,20 +33,25 @@
     }
 
     #message2 {
-        background-color: darkcyan;
-        color: white;
+       
+        color: mediumspringgreen;
         text-align: center;
         margin-top: 10%;
         margin-left: 25%;
         padding-top: 10px;
         padding-bottom: 10px;
         display: none;
-        border: 2px solid black;
-        border-radius: 100px;
+        
     }
 
     .ui-datepicker-calendar {
         display: none;
+    }
+    .subheader{
+        padding-top:50px;
+        padding-bottom:50px;
+        margin-left:5%;
+        color:darkslategrey;
     }
         
     
@@ -55,36 +60,15 @@
 
 
 <h1 class="header">Attendance List</h1>
+
+<h5 class="subheader">First select the month and year from the dropdown list and then select all the absent dates of students from the following table.</h5>
 <button class="btn btn-dark form-group" id="getdata" style="margin-left:45%;">Display all</button>
 <div class="col-10" id="top" style="display: none">
 
-    <p>Date: <input type="text" id="datepicker" class="ml-auto" style="margin-bottom:10%;"></p>
-    @*<div class="row">
-            <label for="months" class="form-group rounded" style="padding-right:20px;" >Choose a Month:</label>
-            <select id="months" class="form-group col-4 rounded">
-                <option selected value="">--Select One--</option>
-                <option value="January">January</option>
-                <option value="February">February</option>
-                <option value="March">March</option>
-                <option value="April">April</option>
-                <option value="May">May</option>
-                <option value="June">June</option>
-                <option value="July">July</option>
-                <option value="August">August</option>
-                <option value="September">September</option>
-                <option value="October">October</option>
-                <option value="November">November</option>
-                <option value="December">December</option>
+    <h5 style="color:darkslategrey">Date: <input type="text" id="datepicker" class="ml-auto" style="margin-bottom:10%;"></h5>
+    
 
-
-            </select>
-        </div>
-        <div class="row">
-            <label class="form-group" for="year" style="padding-right:50px;">Write a year</label>
-            <input class="form-group col-4 rounded" type="text" id="year" value="">
-        </div>*@
-<div style="margin-top:15%;"></div>
-    <button class="btn btn-info btn-lg" id="submit">Submit</button>
+    
 
 
     <h4 id="message" style="color:darkcyan;text-align:center"></h4>
@@ -130,6 +114,7 @@
         </tbody>
     </table>
 </div>
+<button style="display:block;margin-top:100px;margin-bottom:50px;" class="btn btn-info btn-lg rounded" id="submit">Submit</button>
 <a class="btn btn-outline-success btn-lg" href="https://localhost:44393/Attendances/Datashow" id="details" style="display:none;margin-left:30%;margin-right:30%;">See details</a>
 
 

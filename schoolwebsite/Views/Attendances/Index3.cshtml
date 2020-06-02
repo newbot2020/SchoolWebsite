@@ -12,7 +12,16 @@
         margin-left:25%;
         padding-left:50px;
         padding-right:50px;
+        
     }
+    .tableformat2{
+       
+        margin-left:-20px;
+        padding-left:50px;
+        padding-right:50px;
+        
+    }
+    
     
 </style>
 
@@ -30,7 +39,7 @@
         <input class="form-group col-2" type="search" name="" value="" id="roll" />
     </div>
     <br /><br />
-    <h6 style="text-align:center;padding-top:5%;border-top:2px solid blue;">Or</h6>
+    <h6 style="text-align: center; padding-top: 5%; border-top: 2px solid blue;">Or</h6>
     <div class="row">
         <label class="from-group col-4">Students Name</label>
         <select class="from-group col-4" asp-items="ViewBag.nameofstudents" id="nameinfo">
@@ -43,9 +52,10 @@
 <div id="main" style="display:none;">
     <div id="tablein" class="tableformat">
         <h2>Student's Information</h2>
-
+        
     </div>
-    
+    <h2 style="padding-top:100px;text-align:center;padding-bottom:50px;">Date of Presence</h2>
+    <div id="tablein2" class="tableformat2"></div>
     </div>
 @section Scripts{
     <script>
@@ -96,7 +106,7 @@
                         roll: roll
                     },
                     function (data, status) {
-                        console.log("Data: " + data + "\nStatus: " + status);
+                        //console.log("Data: " + data + "\nStatus: " + status);
                         
                         var htmlcontent = '';
                         var tablecontent = `<table class="table table-striped col-8">
@@ -136,22 +146,112 @@
                             <td class="col-2">Address</td>
                             <td id="address" class="col-4 text-center"></td>
                             <td class="col-2"></td>
-                        </tr>
-                        <tr>
-                            <td class="col-2">Date of Absents </td><td class="col-4 text-center"></td><td class="col-2"></td>
+                        </tr>`
+                       
 
-                        </tr>`;
-                        for (var i = 0; i < data.length; i++) {
-                                    var content = '<tr><td class="col-2">'+data[i].year +'</td><td class="col-2 text-center">'+ data[i].month +" "+ '</td><td class="col-2 text-center">'+ data[i].day +" "+ '</td></tr>';
-                                    htmlcontent += content;
-                                    //$("#absent").innerhtml(content);
+                        var htmltable = tablecontent +  '</table>';
+
+
+
+                        //Here is the code for showing dummy table content of attendance show
+                    let table_content = `
+                        <table class="table table-striped ">
+                                <thead class="">
+                                    <tr>
+                                        <th>Year</th>
+                                        <th>Month</th>
+                                        <th>1</th>
+                                        <th>2</th>
+                                        <th>3</th>
+                                        <th>4</th>
+                                        <th>5</th>
+                                        <th>6</th>
+                                        <th>7</th>
+                                        <th>8</th>
+                                        <th>9</th>
+                                        <th>10</th>
+                                        <th>11</th>
+                                        <th>12</th>
+                                        <th>13</th>
+                                        <th>14</th>
+                                        <th>15</th>
+                                        <th>16</th>
+                                        <th>17</th>
+                                        <th>18</th>
+                                        <th>19</th>
+                                        <th>20</th>
+                                        <th>21</th>
+                                        <th>22</th>
+                                        <th>23</th>
+                                        <th>24</th>
+                                        <th>25</th>
+                                        <th>26</th>
+                                        <th>27</th>
+                                        <th>28</th>
+                                        <th>29</th>
+                                        <th>30</th>
+                                        <th>31</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablebody">
+
+                                </tbody>
+
+                            </table>`;
+
+                        //code for including the attendance table in the page
+
+                        
+                        let content = ''
+                        let temporary_present_array = []
+                         let temporary_id_array=[]
+
+                    for (j = 0; j < data.length; j++) {
+                        let checkboxhtml = '';
+                        for (i = 0; i < 31; i++) {
+                            let identity = (data[j].id * 100 + i);
+                            rowoftable = '<td><input type="checkbox" class="checker" id="' + identity + '" name="' + identity +
+                                '" value=""></input>' + '</td>';
+                            checkboxhtml += rowoftable;
+                        }
+                        temporary_present_array.push((data[j]["day"]).split(","));
+                        temporary_id_array.push(data[j]["id"]);
+                        content += '<tr><td>' + data[j]["year"] + '</td><td>' + data[j]["month"] + '</td>' + checkboxhtml + '</tr>';
                         }
 
-                        var htmltable = tablecontent + htmlcontent + '</table>';
+                       
 
-    
+                         $("#tablein2").append(table_content);
+                         $("#tablebody").append(content);
+                        
+                       
 
 
+                        //loop for selecting desired elements and make the whole present list disabled
+                        let day_id = 0;
+                        i = 0;
+                        
+                                                  
+
+                                for (j = 0; j < temporary_present_array.length; j++) {
+                                    for (l = 0; l < temporary_present_array[j].length; l++) {
+                                        
+                                                                                
+                                        day_id = temporary_id_array[j] * 100 + parseInt(temporary_present_array[j][l]) - 1;
+                                        let day_id_string = '#' + day_id;
+                                        //console.log(day_id_string);
+                                        $(day_id_string).prop("checked", true);
+                                        //$(day_id_string).css('background-color','black');
+
+                                    }
+                                }
+
+                            
+                        
+                        
+                        $('.checker').prop('disabled', true);
+
+                                               
 
 
 
@@ -229,18 +329,111 @@
                             <td class="col-2">Address</td>
                             <td id="address" class="col-4 text-center"></td>
                             <td class="col-2"></td>
-                        </tr>
-                        <tr>
-                            <td class="col-2">Date of Absents </td><td class="col-4 text-center"></td><td class="col-2"></td>
+                        </tr>`
+                       
 
-                        </tr>`;
-                        for (var i = 0; i < data.length; i++) {
-                                    var content = '<tr><td class="col-2">'+data[i].year +'</td><td class="col-2 text-center">'+ data[i].month +" "+ '</td><td class="col-2 text-center">'+ data[i].day +" "+ '</td></tr>';
-                                    htmlcontent += content;
-                                    //$("#absent").innerhtml(content);
+                        var htmltable = tablecontent +  '</table>';
+
+
+
+                        //Here is the code for showing dummy table content of attendance show
+                    let table_content = `
+                        <table class="table table-striped ">
+                                <thead class="">
+                                    <tr>
+                                        <th>Year</th>
+                                        <th>Month</th>
+                                        <th>1</th>
+                                        <th>2</th>
+                                        <th>3</th>
+                                        <th>4</th>
+                                        <th>5</th>
+                                        <th>6</th>
+                                        <th>7</th>
+                                        <th>8</th>
+                                        <th>9</th>
+                                        <th>10</th>
+                                        <th>11</th>
+                                        <th>12</th>
+                                        <th>13</th>
+                                        <th>14</th>
+                                        <th>15</th>
+                                        <th>16</th>
+                                        <th>17</th>
+                                        <th>18</th>
+                                        <th>19</th>
+                                        <th>20</th>
+                                        <th>21</th>
+                                        <th>22</th>
+                                        <th>23</th>
+                                        <th>24</th>
+                                        <th>25</th>
+                                        <th>26</th>
+                                        <th>27</th>
+                                        <th>28</th>
+                                        <th>29</th>
+                                        <th>30</th>
+                                        <th>31</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablebody">
+
+                                </tbody>
+
+                            </table>`;
+
+                        //code for including the attendance table in the page
+
+                        
+                        let content = ''
+                        let temporary_present_array = []
+                         let temporary_id_array=[]
+
+                    for (j = 0; j < data.length; j++) {
+                        let checkboxhtml = '';
+                        for (i = 0; i < 31; i++) {
+                            let identity = (data[j].id * 100 + i);
+                            rowoftable = '<td><input type="checkbox" class="checker" id="' + identity + '" name="' + identity +
+                                '" value=""></input>' + '</td>';
+                            checkboxhtml += rowoftable;
+                        }
+                        temporary_present_array.push((data[j]["day"]).split(","));
+                        temporary_id_array.push(data[j]["id"]);
+                        content += '<tr><td>' + data[j]["year"] + '</td><td>' + data[j]["month"] + '</td>' + checkboxhtml + '</tr>';
                         }
 
-                        var htmltable = tablecontent + htmlcontent + '</table>';
+                        
+                         $("#tablein2").append(table_content);
+                         $("#tablebody").append(content);
+                        
+                       
+
+
+                        //loop for selecting desired elements and make the whole present list disabled
+                        let day_id = 0;
+                        i = 0;
+                        
+                                                  
+
+                                for (j = 0; j < temporary_present_array.length; j++) {
+                                    for (l = 0; l < temporary_present_array[j].length; l++) {
+                                        
+                                                                                
+                                        day_id = temporary_id_array[j] * 100 + parseInt(temporary_present_array[j][l]) - 1;
+                                        let day_id_string = '#' + day_id;
+                                        //console.log(day_id_string);
+                                        $(day_id_string).prop("checked", true);
+                                        //$(day_id_string).css('background-color','black');
+
+                                    }
+                                }
+
+                            
+                        
+                        
+                        $('.checker').prop('disabled', true);
+
+
 
     
 

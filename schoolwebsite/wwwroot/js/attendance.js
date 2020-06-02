@@ -49,6 +49,7 @@
         $("#message").text("Loading Table...");
         $("#message2").text("Data saved Successfully");
         
+        
         $.get("/Attendances/Index4",
             
             function (data) {
@@ -70,6 +71,8 @@
 
                     }
                     $("#message").css("display", "none");
+                    
+                    
                     
 
                     
@@ -117,7 +120,7 @@
                         tableBody.append(markup);
 
                     }
-                    
+                     
                 }
 
 
@@ -169,8 +172,10 @@
                         let month = datepicker1[0];
                         let year = datepicker1[1];
                         let tempdatefinal = [];
+                        let alldaysofmonth = [];
                         //let tempdate2 = [];
                         let count, i;
+                        
 
                         for (let i = 0; i < dataofperson.length; i++) {
 
@@ -195,7 +200,7 @@
                         console.log(finalid);
                         let lastnumberofloop = (datearray.length) - indexdatearray[indexdatearray.length - 1]
 
-
+                        
 
                         for (j = 0; j < indexdatearray.length; j++) {
                             if (j > 0) {
@@ -247,7 +252,43 @@
                             }
                         }
 
-                        //here we are going to impleement the absent to present conversion code blocks
+                        console.log("absent days only" + tempdatefinal);
+                        console.log("absent data testing");
+                        console.log(tempdatefinal[0]);
+                        console.log(tempdatefinal[1]);
+                        //converting tempdatefinal of absent days to present days
+                        //Special test
+
+                        function removeElement(array, elem) {
+                            var index = array.indexOf(elem);
+                            if (index > -1) {
+                                array.splice(index, 1);
+                            }
+                        }
+                        for (i = 0; i < tempdatefinal.length; i++) {
+                            alldaysofmonth = [];
+                            for (j = 0; j < 31; j++) {
+                                alldaysofmonth.push(j + 1);
+                            }
+                            if (tempdatefinal[i].length == 1) {
+                                let tempfinaldate_nonarray = tempdatefinal[i];
+                                removeElement(alldaysofmonth, tempfinaldate_nonarray);
+                                tempdatefinal[i] = alldaysofmonth;
+                            }
+                            if (tempdatefinal[i].length > 1) {
+                                for (let k = 0; k < tempdatefinal[i].length; k++) {
+                                    let tempfinaldate_nonarray = tempdatefinal[i][k];
+                                    removeElement(alldaysofmonth, tempfinaldate_nonarray);
+                                    
+                                }
+                                tempdatefinal[i] = alldaysofmonth;
+                            }
+                                                                                 
+                           
+                        }
+                        console.log("Present days only" + tempdatefinal.toString());
+
+                        //here we are going to implement the absent to present conversion code blocks
 
                         for (i = 0; i < finalid.length; i++) {
                             finaljson.push({
@@ -279,6 +320,7 @@
                                     }, 2000);
                                 });
                         }
+                        console.log(finaljson);
 
                         //for testing purpose to see what data is sent please comment this lines after testing
                         console.log("###############    Testing Started    ##########");
