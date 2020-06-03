@@ -21,6 +21,10 @@
         padding-right:50px;
         
     }
+
+    .rounded-circle{
+        margin-left:25%;
+    }
     
     
 </style>
@@ -53,6 +57,7 @@
     <div id="tablein" class="tableformat">
         <h2>Student's Information</h2>
         
+
     </div>
     <h2 style="padding-top:100px;text-align:center;padding-bottom:50px;">Date of Presence</h2>
     <div id="tablein2" class="tableformat2"></div>
@@ -99,16 +104,24 @@
 
                 };
                 console.log(data);
-                $.post("/Attendances/Searchbox",
-                    {
-                        classinfo: classinfo,
-                        section:section,
-                        roll: roll
-                    },
-                    function (data, status) {
-                        //console.log("Data: " + data + "\nStatus: " + status);
-                        
-                        var htmlcontent = '';
+                    $.post("/Attendances/Searchbox",
+                        {
+                            classinfo: classinfo,
+                            section: section,
+                            roll: roll
+                        },
+                        function (data, status) {
+                            //console.log("Data: " + data + "\nStatus: " + status);
+
+
+                            var profileimage = '';
+                            if (data[0].students.Imagefilename == '') {
+                                var profileimage = '<img class="rounded-circle" style="width:100px;height:100px;" src="~/Images/2020/default.png" />';
+                            }
+                            else {
+                                var imageurl = '~/Images/2020/' + data[0].students.classinfo + '/' + data[0].students.imagefilename;
+                            var profileimage = '<img class="rounded-circle" style="width:100px;height:100px;" src="'+imageurl+'" />';
+                        }
                         var tablecontent = `<table class="table table-striped col-8">
                         <thead>
                             <tr>
@@ -117,6 +130,9 @@
 
                             </tr>
                         </thead>
+                        <tr>`+profileimage+`
+                            
+                        </tr>
                         <tr>
                             <td class="col-2">Name</td>
                             <td id="name" class="col-4 text-center"></td>
@@ -290,6 +306,14 @@
                     },
                     function (data, status) {
                         console.log("Data: " + data + "\nStatus: " + status);
+                         var profileimage = '';
+                        if (data[0].students.imagefilename == '') {
+                            var profileimage = '<img class="rounded-circle" style="width:100px;height:100px;" src="https://localhost:44393/Images/2020/default.png" />';
+                        }
+                        else {
+                            var imageurl = '~/Images/2020/' + data[0].students.classinfo + '/' + data[0].students.imagefilename;
+                            var profileimage = '<img class="rounded-circle" style="width:100px;height:100px;" src="' + imageurl + '" />';
+                        }
                         
                         var htmlcontent = '';
                         var tablecontent = `<table class="table table-striped col-8">
@@ -300,6 +324,9 @@
 
                             </tr>
                         </thead>
+                        <tr>`+ profileimage +`
+                            
+                        </tr>
                         <tr>
                             <td class="col-2">Name</td>
                             <td id="name" class="col-4 text-center"></td>

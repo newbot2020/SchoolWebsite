@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,16 +16,20 @@ namespace schoolwebsite.Controllers
     {
 
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public StudentsController(ApplicationDbContext context)
+
+        public StudentsController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            this._hostEnvironment = hostEnvironment;
         }
 
         // GET: Students
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Students.ToListAsync());
+            var result = await _context.Students.ToListAsync();                
+                return View(result);
         }
 
         // GET: Students/Details/5
@@ -55,16 +61,38 @@ namespace schoolwebsite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,Name,classinfo,roll,section,address,parentscontact,username,password")] Students students)
+        public async Task<IActionResult> Create([Bind("id,Name,classinfo,roll,section,address,parentscontact,username,password,Image")] Students students)
         {
-            if (ModelState.IsValid)           {
-                
+            
+            if (ModelState.IsValid)
+            {
+                if (students.Image != null)
+                {
+
+                    TempData["save"] = "Submitted Successfully";
+                    string wwwRootPath = _hostEnvironment.WebRootPath;
+                    string filename = Path.GetFileNameWithoutExtension(students.Image.FileName);
+                    string extension = Path.GetExtension(students.Image.FileName);
+                    students.Imagefilename = filename = students.Name + DateTime.Now.ToString("yymmss") + extension;
+                    string foldername = students.classinfo.ToString();
+
+
+                    string path2 = wwwRootPath + "\\Images\\" + "\\2020\\" + foldername;
+
+                    if (!Directory.Exists(path2))
+                        Directory.CreateDirectory(path2);
+                    //Directory.CreateDirectory("wwwRootPath\\Images\\2020\\"+foldername);
+                    string path = Path.Combine(wwwRootPath + "/Images/2020", foldername, filename);
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await students.Image.CopyToAsync(fileStream);
+                    }
+                }
                 _context.Add(students);
                 await _context.SaveChangesAsync();
-                TempData["save"] = "Submitted Successfully";
                 return RedirectToAction(nameof(Index));
-
             }
+           
             return View(students);
         }
 
@@ -161,7 +189,10 @@ namespace schoolwebsite.Controllers
             }
             else { return Json(0); }
         }
-
+        public IActionResult Jsonshow(int id)
+        {
+            return Json(_context.Students.Find(id));
+        } 
         private bool StudentsExists(int id)
         {
             return _context.Students.Any(e => e.id == id);

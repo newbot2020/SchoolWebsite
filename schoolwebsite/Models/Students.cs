@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -21,10 +22,9 @@ namespace schoolwebsite.Models
         public int id { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MMMM,dd  yyyy  hh:mm}")]
         public DateTime? DateCreated { get; set; }
-        
-        
+              
         [Required]
-                public string Name { get; set; }
+        public string Name { get; set; }
         [Required]
         public int classinfo { get; set; }
         [Required]
@@ -39,6 +39,10 @@ namespace schoolwebsite.Models
         public string username { get; set; }
         [Required]
         public string password { get; set; }
+        
+        public string Imagefilename { get; set; }
+        [NotMapped]
+        public IFormFile Image { get; set; }
 
         public List<Subjects> results { get; set; }
 

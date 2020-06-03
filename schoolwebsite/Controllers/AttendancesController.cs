@@ -11,7 +11,7 @@ using schoolwebsite.Models;
 
 namespace schoolwebsite.Controllers
 {
-    [Authorize]
+    
     public class AttendancesController : Controller
     {
         private readonly ApplicationDbContext _context;
