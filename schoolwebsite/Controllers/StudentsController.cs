@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,6 +13,7 @@ using schoolwebsite.Models;
 
 namespace schoolwebsite.Controllers
 {
+    
     public class StudentsController : Controller
     {
 
@@ -23,6 +25,8 @@ namespace schoolwebsite.Controllers
         {
             _context = context;
             this._hostEnvironment = hostEnvironment;
+
+            
         }
 
         // GET: Students
@@ -33,6 +37,8 @@ namespace schoolwebsite.Controllers
         }
 
         // GET: Students/Details/5
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -61,19 +67,19 @@ namespace schoolwebsite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,Name,classinfo,roll,section,address,parentscontact,username,password,Image")] Students students)
+        public async Task<IActionResult> Create([Bind("id,Name,classinfo,roll,section,address,parentscontact,username,dateofbirth,password,Image")] Students students)
         {
             
             if (ModelState.IsValid)
             {
                 if (students.Image != null)
                 {
-
+                    string datevalue = students.dateofbirth;
                     TempData["save"] = "Submitted Successfully";
                     string wwwRootPath = _hostEnvironment.WebRootPath;
                     string filename = Path.GetFileNameWithoutExtension(students.Image.FileName);
                     string extension = Path.GetExtension(students.Image.FileName);
-                    students.Imagefilename = filename = students.Name + DateTime.Now.ToString("yymmss") + extension;
+                    students.Imagefilename = filename = students.id + extension;
                     string foldername = students.classinfo.ToString();
 
 
@@ -88,6 +94,7 @@ namespace schoolwebsite.Controllers
                         await students.Image.CopyToAsync(fileStream);
                     }
                 }
+                string datevalue1 = students.dateofbirth;
                 _context.Add(students);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -95,7 +102,9 @@ namespace schoolwebsite.Controllers
            
             return View(students);
         }
-
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Headmaster")]
         // GET: Students/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -115,9 +124,13 @@ namespace schoolwebsite.Controllers
         // POST: Students/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Headmaster")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,Name,classinfo,roll,section,address,parentscontact,username,password")] Students students)
+        public async Task<IActionResult> Edit(int id, [Bind("id,Name,classinfo,roll,section,address,parentscontact,username,password,dateofbirth,Image")] Students students)
         {
             if (id != students.id)
             {
@@ -128,6 +141,28 @@ namespace schoolwebsite.Controllers
             {
                 try
                 {
+                    if (students.Image != null)
+                    {
+
+                        TempData["save"] = "Submitted Successfully";
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(students.Image.FileName);
+                        string extension = Path.GetExtension(students.Image.FileName);
+                        students.Imagefilename = filename = students.id + extension;
+                        string foldername = students.classinfo.ToString();
+
+
+                        string path2 = wwwRootPath + "\\Images\\" + "\\2020\\" + foldername;
+
+                        if (!Directory.Exists(path2))
+                            Directory.CreateDirectory(path2);
+                        //Directory.CreateDirectory("wwwRootPath\\Images\\2020\\"+foldername);
+                        string path = Path.Combine(wwwRootPath + "/Images/2020", foldername, filename);
+                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await students.Image.CopyToAsync(fileStream);
+                        }
+                    }
                     _context.Update(students);
                     await _context.SaveChangesAsync();
                 }
@@ -148,6 +183,10 @@ namespace schoolwebsite.Controllers
             return View(students);
         }
 
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Headmaster")]
+
         // GET: Students/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -167,16 +206,23 @@ namespace schoolwebsite.Controllers
         }
 
         // POST: Students/Delete/5
-        [HttpPost, ActionName("Delete")]
+
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Headmaster")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var students = await _context.Students.FindAsync(id);
-            _context.Students.Remove(students);
+            var userinfo = await _context.Students.FindAsync(id);
+            var imagepath = Path.Combine(_hostEnvironment.WebRootPath, "Images", "2020",userinfo.classinfo.ToString(), userinfo.Imagefilename);
+            if (System.IO.File.Exists(imagepath))
+                System.IO.File.Delete(imagepath);
+            _context.Students.Remove(userinfo);
             await _context.SaveChangesAsync();
-            TempData["delete"] = "Deleted Successfully";
             return RedirectToAction(nameof(Index));
         }
+
 
 
 

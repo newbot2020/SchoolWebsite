@@ -12,5 +12,9 @@ namespace schoolwebsite.Controllers
         {
             return View();
         }
+        //public IActionResult Accessdenied()
+        //{
+        //    return View();
+        //}
     }
 }

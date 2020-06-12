@@ -310,8 +310,8 @@
                         if (data[0].students.imagefilename == '') {
                             var profileimage = '<img class="rounded-circle" style="width:100px;height:100px;" src="https://localhost:44393/Images/2020/default.png" />';
                         }
-                        else {
-                            var imageurl = '~/Images/2020/' + data[0].students.classinfo + '/' + data[0].students.imagefilename;
+                        if (data[0].students.imagefilename != '') {
+                            var imageurl = 'https://localhost:44393/Images/2020/' + data[0].students.classinfo + '/' + data[0].students.imagefilename;
                             var profileimage = '<img class="rounded-circle" style="width:100px;height:100px;" src="' + imageurl + '" />';
                         }
                         

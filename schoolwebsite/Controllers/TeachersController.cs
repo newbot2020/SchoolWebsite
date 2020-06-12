@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -66,7 +67,9 @@ namespace schoolwebsite.Controllers
             }
             return View(teachers);
         }
-
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Headmaster")]
         // GET: Teachers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -86,6 +89,9 @@ namespace schoolwebsite.Controllers
         // POST: Teachers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Headmaster")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("id,Name,Email,ContactNum,Address,Username,password")] Teachers teachers)
@@ -117,6 +123,8 @@ namespace schoolwebsite.Controllers
             }
             return View(teachers);
         }
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Headmaster")]
 
         // GET: Teachers/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -136,6 +144,8 @@ namespace schoolwebsite.Controllers
             return View(teachers);
         }
 
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Headmaster")]
         // POST: Teachers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

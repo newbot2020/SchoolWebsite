@@ -11,7 +11,7 @@ using schoolwebsite.Models;
 
 namespace schoolwebsite.Controllers
 {
-    
+    [Authorize]
     public class AttendancesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -111,7 +111,7 @@ namespace schoolwebsite.Controllers
         public IActionResult Datainfo(int userdata)
         {
             //string ID = userdata.ToString();
-            var result = _context.Attendances.Include(m=>m.Students).Where(m => m.Students.id == userdata).ToList();
+            var result = _context.Attendances.Include(m=>m.Students).Where(m => m.Students.id == userdata).OrderByDescending(m=>m.Year).ToList();
             return Json(result);
         }
 
@@ -124,9 +124,16 @@ namespace schoolwebsite.Controllers
             return Json (result);
         }
 
-        public IActionResult Deleteall()
+        //this action is only for testing purpose
+
+        public IActionResult AttendancesData()
         {
             var result = _context.Attendances.ToList();
+            return Json(result);
+        }
+        public IActionResult Deleteall()
+        {
+            var result = _context.Attendances.Include(m=>m.Students).ToList();
 
 
             

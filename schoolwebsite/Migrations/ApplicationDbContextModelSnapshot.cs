@@ -362,6 +362,9 @@ namespace schoolwebsite.Migrations
                     b.Property<int>("classinfo")
                         .HasColumnType("int");
 
+                    b.Property<string>("dateofbirth")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("parentscontact")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -484,6 +487,26 @@ namespace schoolwebsite.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Teachers");
+                });
+
+            modelBuilder.Entity("schoolwebsite.Models.UserRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserRole");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

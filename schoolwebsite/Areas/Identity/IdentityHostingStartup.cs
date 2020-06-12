@@ -20,7 +20,7 @@ namespace schoolwebsite.Areas.Identity
                         context.Configuration.GetConnectionString("schoolwebsiteContextConnection")));
 
                 //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                //    .AddEntityFrameworkStores<schoolwebsiteContext>();
+                 //   .AddEntityFrameworkStores<schoolwebsiteContext>();
             });
         }
     }

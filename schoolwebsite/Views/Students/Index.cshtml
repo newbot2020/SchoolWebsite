@@ -15,7 +15,9 @@
         <tr>
 
 
-
+            <th>
+                @Html.DisplayNameFor(model => model.id)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.DateCreated)
 
@@ -23,6 +25,9 @@
 
             <th>
                 @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+               Date of Birth
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.classinfo)
@@ -55,7 +60,9 @@
         @foreach (var item in Model)
         {
         <tr>
-
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateCreated)
 
@@ -63,6 +70,9 @@
 
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dateofbirth)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.classinfo)
@@ -88,17 +98,25 @@
             <td>
 
                 @*<img class="rounded-circle" style="width:100px;height:100px;" src="~/Images/2020/default.png" asp-append-version="true" />*@
-                @if (item.Imagefilename == "") {<img class="rounded-circle" style="width:100px;height:100px;" src="~/Images/2020/default.png" /> }
-                else {<img class="rounded-circle" style="width:100px;height:100px;" src="~/Images/2020/@(item.classinfo.ToString()+"/"+item.Imagefilename)" /> }
-                
+                @if (item.Imagefilename == "")
+                {<img class="rounded-circle" style="width:100px;height:100px;" src="~/Images/2020/default.png" /> }
+                else
+                {<img class="rounded-circle" style="width:100px;height:100px;" src="~/Images/2020/@(item.classinfo.ToString()+"/"+item.Imagefilename)" />}
+
             </td>
             <td>
-                <div class="btn-group" role="group" aria-label="Basic example">
-                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.id">Edit</a>
-                    <a class="btn btn-light" asp-action="Details" asp-route-id="@item.id">Details</a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.id">Delete</a>
-                </div>
+                @if (User.Identity.IsAuthenticated)
 
+                {
+                    if (User.IsInRole("Admin") || User.IsInRole("Headmaster"))
+                    {
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.id">Edit</a>
+                            <a class="btn btn-light" asp-action="Details" asp-route-id="@item.id">Details</a>
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                        </div>
+                    }
+                }
             </td>
         </tr>
         }
